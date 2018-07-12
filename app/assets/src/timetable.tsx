@@ -1,85 +1,89 @@
 import React from 'react';
 import { connect } from 'react-redux';
-// import { withRouter } from 'react-router';
+import { withRouter } from 'react-router';
 
-// import {
-//     filterToggleCheckbox, filterChangeKeyword,
-//     selectItem
-// } from './redux/actions';
+import {
+    filterToggleCheckbox, filterChangeKeyword,
+    selectItem
+} from './redux/actions';
 
-// class Form extends React.Component {
+interface IFormProps {
+    day?: any;
+    stage?: any;
+    keyword?: any;
+}
 
-//     private days: any[];
-//     private stages: any[];
+class Form extends React.Component<IFormProps> {
 
-//     constructor(props) {
-//         super(props);
-//         this.days = [
-//             { label: '8/26(土)', key: '08-26' },
-//             { label: '8/27(日)', key: '08-27' },
-//         ];
-//         this.stages = [
-//             { label: 'ストロベリー', key: 'strawberry' },
-//             { label: 'ブルーベリー', key: 'blueberry'  },
-//             { label: 'オレンジ',     key: 'orange'     },
-//             { label: 'グレープ',     key: 'grape'      },
-//             { label: 'キウイ',       key: 'kiwi'       },
-//             { label: 'ピーチ',       key: 'peach'      },
-//             { label: 'パイナップル', key: 'pinapple'   },
-//             { label: 'トーク',       key: 'talk'       },
-//             { label: 'ふれあい',     key: 'greeting'   },
-//         ];
-//     }
-//     render() {
-//         const days = this.days.map((e, i) => {
-//             return (
-//                 <label key={i} className="checkbox-inline">
-//                     <input
-//                         type="checkbox"
-//                         checked={this.props.day[e.key]}
-//                         onChange={() => this.props.dispatch(filterToggleCheckbox(e.key))} />
-//                     {e.label}
-//                 </label>
-//             );
-//         });
-//         const stages = this.stages.map((e, i) => {
-//             return (
-//                 <label key={i} className="checkbox-inline" style={{ marginLeft: '0px', marginRight: '10px' }}>
-//                     <input
-//                         type="checkbox"
-//                         checked={this.props.stage[e.key]}
-//                         onChange={() => this.props.dispatch(filterToggleCheckbox(e.key))} />
-//                     {e.label}
-//                 </label>
-//             );
-//         });
-//         return (
-//             <form className="form-horizontal" onSubmit={(e) => e.preventDefault()}>
-//                 <div className="form-group">
-//                     <label className="col-sm-2 control-label">日付</label>
-//                     <div className="col-sm-10">{days}</div>
-//                 </div>
-//                 <div className="form-group">
-//                     <label className="col-sm-2 control-label">ステージ</label>
-//                     <div className="col-sm-10">{stages}</div>
-//                 </div>
-//                 <div className="form-group">
-//                     <label className="col-sm-2 control-label">出演者名</label>
-//                     <div className="col-sm-10">
-//                         <input
-//                             className="form-control"
-//                             type="text"
-//                             value={this.props.keyword}
-//                             onChange={(e) => this.props.dispatch(filterChangeKeyword(e.target.value))} />
-//                     </div>
-//                 </div>
-//             </form>
-//         );
-//     }
-// }
-// const FilterForm = connect(
-//     (state) => state.filter
-// )(Form);
+    private days: any[];
+    private stages: any[];
+
+    constructor(props: any) {
+        super(props);
+        this.days = [
+            { label: '8/3(金)', key: '08-03' },
+            { label: '8/4(土)', key: '08-04' },
+            { label: '8/5(日)', key: '08-05' },
+        ];
+        this.stages = [
+        ];
+    }
+    render() {
+        const days = this.days.map((e, i) => {
+            return (
+                <div className="form-check form-check-inline">
+                    <label key={i} className="form-check-label">
+                        <input
+                            type="checkbox"
+                            checked={this.props.day[e.key]}
+                            className="form-check-input"
+                            // onChange={() => this.props.dispatch(filterToggleCheckbox(e.key))}
+                        />
+                        {e.label}
+                    </label>
+                </div>
+            );
+        });
+        const stages = this.stages.map((e, i) => {
+            return (
+                <label key={i} className="checkbox-inline" style={{ marginLeft: '0px', marginRight: '10px' }}>
+                    <input
+                        type="checkbox"
+                        checked={this.props.stage[e.key]}
+                        // onChange={() => this.props.dispatch(filterToggleCheckbox(e.key))}
+                    />
+                    {e.label}
+                </label>
+            );
+        });
+        return (
+            <form className="form-horizontal" onSubmit={(e) => e.preventDefault()}>
+                <div className="form-group row">
+                    <label className="col-sm-2 control-label">日付</label>
+                    <div className="col-sm-10">{days}</div>
+                </div>
+                <div className="form-group row">
+                    <label className="col-sm-2 control-label">ステージ</label>
+                    <div className="col-sm-10">{stages}</div>
+                </div>
+                <div className="form-group row">
+                    <label className="col-sm-2 control-label">出演者名</label>
+                    <div className="col-sm-10">
+                        <input
+                            className="form-control"
+                            type="text"
+                            value={this.props.keyword}
+                            // onChange={(e) => this.props.dispatch(filterChangeKeyword(e.target.value))}
+                        />
+                    </div>
+                </div>
+            </form>
+        );
+    }
+}
+const FilterForm = connect(
+    (state: any) => state.filter
+)(Form);
 
 // class Row extends React.Component {
 //     render() {
@@ -131,31 +135,36 @@ import { connect } from 'react-redux';
 //     }
 // }
 
-// class BottomNavbar extends React.Component {
-//     handleClick() {
-//         this.props.history.push('/result');
-//     }
-//     render() {
-//         return (
-//             <nav className="navbar navbar-default navbar-fixed-bottom">
-//                 <div className="container-fluid">
-//                     <div className="navbar-collapse navbar-right">
-//                         <button className="btn btn-primary navbar-btn" onClick={this.handleClick.bind(this)}>
-//                             選択中の
-//                             <strong>{this.props.count}</strong>
-//                             件でタイムテーブルを生成
-//                         </button>
-//                     </div>
-//                 </div>
-//             </nav>
-//         );
-//     }
-// }
-// const RoutingBottomNavbar = withRouter(BottomNavbar);
+interface IBottomBavbarProps {
+    history: any;
+    count: any;
+}
+
+class BottomNavbar extends React.Component<IBottomBavbarProps> {
+    handleClick() {
+        this.props.history.push('/result');
+    }
+    render() {
+        return (
+            <nav className="navbar navbar-default navbar-fixed-bottom">
+                <div className="container-fluid">
+                    <div className="navbar-collapse navbar-right">
+                        <button className="btn btn-primary navbar-btn" onClick={this.handleClick.bind(this)}>
+                            選択中の
+                            <strong>{this.props.count}</strong>
+                            件でタイムテーブルを生成
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        );
+    }
+}
+const RoutingBottomNavbar = withRouter<any>(BottomNavbar);
 
 interface ITimeTableProps {
-    filter: any
-    timetable: any
+    filter: any;
+    timetable: any;
 }
 
 class TimeTable extends React.Component<ITimeTableProps> {
@@ -178,14 +187,14 @@ class TimeTable extends React.Component<ITimeTableProps> {
             return true;
         });
         const selectedCount = Object.keys(this.props.timetable.selected).length;
-        // const footer = selectedCount > 0 ? <RoutingBottomNavbar count={selectedCount} /> : null;
+        const footer = selectedCount > 0 ? <RoutingBottomNavbar count={selectedCount} /> : null;
         return (
             <div>
-                {/* <FilterForm />
+                <FilterForm />
                 <hr />
                 <p>全{items.length}件</p>
-                <Table items={items} />
-                {footer} */}
+                {/* <Table items={items} /> */}
+                {footer}
             </div>
         );
     }
