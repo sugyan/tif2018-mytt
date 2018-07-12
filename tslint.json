@@ -3,9 +3,9 @@
     "extends": [
         "tslint:recommended"
     ],
-    "jsRules": {
-        "quotemark": [true, "single", "jsx-double"],
+    "jsRules": {},
+    "rules": {
+        "quotemark": [true, "single", "jsx-double"]
     },
-    "rules": {},
     "rulesDirectory": []
 }

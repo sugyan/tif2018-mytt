@@ -1,23 +1,23 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider, connect } from 'react-redux';
-import { createStore } from 'redux';
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/ja';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { connect, Provider } from 'react-redux';
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
+import { createStore } from 'redux';
 import 'whatwg-fetch';
 
-import TimeTable from './timetable';
 // import Result from './result';
+import { generateResult, selectItems, updateTimeTable } from './redux/actions';
 import reducers from './redux/reducers';
-import { updateTimeTable, selectItems, generateResult } from './redux/actions';
+import TimeTable from './timetable';
 
 interface IMainProps {
-    fetchTimeTable(v: any[]): void
+    fetchTimeTable(v: any[]): void;
 }
 
 class Main extends React.Component<IMainProps, {}> {
-    componentDidMount() {
+    public componentDidMount() {
         fetch('/api/timetable.json').then((res) => {
             return res.json();
         }).then((json) => {
@@ -30,7 +30,7 @@ class Main extends React.Component<IMainProps, {}> {
             }));
         });
     }
-    render() {
+    public render() {
         return (
             <BrowserRouter>
                 <div>
@@ -70,25 +70,25 @@ window.addEventListener('DOMContentLoaded', () => {
                         dispatch(selectItems(ids));
 
                         fetch('/api/generate', {
-                            method: 'POST',
+                            body: JSON.stringify({ ids }),
                             headers: {
-                                'Content-Type': 'application/json'
+                                'Content-Type': 'application/json',
                             },
-                            body: JSON.stringify({ ids: ids })
+                            method: 'POST',
                         }).then((response) => {
                             return response.json();
                         }).then((json) => {
                             dispatch(generateResult(json.result));
                         });
                     }
-                }
+                },
             };
-        }
+        },
     )(Main);
     ReactDOM.render(
         <Provider store={createStore(reducers)}>
             <App />
         </Provider>,
-        document.getElementById('main')
+        document.getElementById('main'),
     );
 });
