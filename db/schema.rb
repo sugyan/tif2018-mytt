@@ -10,18 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2017_07_15_125736) do
+ActiveRecord::Schema.define(version: 20170814141215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "results", force: :cascade do |t|
+  create_table "timetables", force: :cascade do |t|
     t.string "key"
-    t.string "data"
+    t.text "data"
     t.string "url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["key"], name: "index_results_on_key", unique: true
+    t.index ["key"], name: "index_timetables_on_key", unique: true
   end
 
 end
