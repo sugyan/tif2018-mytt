@@ -1,5 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, DispatchProp } from 'react-redux';
+import { Dispatch } from 'redux';
+import { FilterAction, filterToggleCheckbox } from '../redux/actions';
 
 interface IFormProps {
     day?: any;
@@ -12,7 +14,7 @@ interface ICheckBox {
     label: string;
 }
 
-class Form extends React.Component<IFormProps> {
+class Form extends React.Component<IFormProps & IDispatchProps> {
 
     private days: ICheckBox[];
     private stages: ICheckBox[];
@@ -36,32 +38,36 @@ class Form extends React.Component<IFormProps> {
         ];
     }
     public render() {
-        const { day, stage, keyword } = this.props;
+        const { day, stage, keyword, onChangeCheckbox } = this.props;
         const days = this.days.map((e, i) => {
+            const id = `day-${i}`;
             return (
                 <div key={i} className="form-check form-check-inline">
-                    <label className="form-check-label">
-                        <input
-                            type="checkbox"
-                            checked={day[e.key]}
-                            className="form-check-input"
-                            // onChange={() => this.props.dispatch(filterToggleCheckbox(e.key))}
-                        />
+                    <input
+                        id={id}
+                        type="checkbox"
+                        checked={day[e.key]}
+                        className="form-check-input"
+                        onChange={() => onChangeCheckbox(e.key)}
+                    />
+                    <label className="form-check-label" htmlFor={id}>
                         {e.label}
                     </label>
                 </div>
             );
         });
         const stages = this.stages.map((e, i) => {
+            const id = `stage-${i}`;
             return (
                 <div key={i} className="form-check form-check-inline">
-                    <label className="form-check-label">
-                        <input
-                            type="checkbox"
-                            checked={stage[e.key]}
-                            className="form-check-input"
-                            // onChange={() => this.props.dispatch(filterToggleCheckbox(e.key))}
-                        />
+                    <input
+                        id={id}
+                        type="checkbox"
+                        checked={stage[e.key]}
+                        className="form-check-input"
+                        onChange={() => onChangeCheckbox(e.key)}
+                    />
+                    <label className="form-check-label" htmlFor={id}>
                         {e.label}
                     </label>
                 </div>
@@ -92,6 +98,18 @@ class Form extends React.Component<IFormProps> {
         );
     }
 }
-export const FilterForm = connect(
+
+interface IDispatchProps {
+    onChangeCheckbox: (name: string) => void;
+}
+
+export const FilterForm = connect<{}, IDispatchProps>(
     (state: any) => state.filter,
+    (dispatch: Dispatch<FilterAction>): IDispatchProps => {
+        return {
+            onChangeCheckbox: (name: string) => {
+                dispatch(filterToggleCheckbox(name));
+            },
+        };
+    },
 )(Form);

@@ -9,13 +9,25 @@ export const updateTimeTable = (data: any) => {
     return { type: UPDATE_TIMETABLE, data };
 };
 
-export const filterToggleCheckbox = (name: any) => {
+interface IFilterCheckboxAction {
+    type: string;
+    name: string;
+}
+
+interface IFilterKeywordAction {
+    type: string;
+    word: string;
+}
+
+export const filterToggleCheckbox = (name: string): IFilterCheckboxAction => {
     return { type: FILTER_TOGGLE_CHECKBOX, name };
 };
 
-export const filterChangeKeyword = (word: any) => {
+export const filterChangeKeyword = (word: any): IFilterKeywordAction => {
     return { type: FILTER_CHANGE_KEYWORD, word };
 };
+
+export type FilterAction = IFilterCheckboxAction | IFilterKeywordAction;
 
 export const selectItem = (id: any, checked: any) => {
     return { type: SELECT_ITEM, id, checked };
