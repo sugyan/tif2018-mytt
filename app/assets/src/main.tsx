@@ -8,9 +8,9 @@ import { createStore } from 'redux';
 import 'whatwg-fetch';
 
 // import Result from './result';
+import TimeTable from './components/timetable';
 import { generateResult, selectItems, updateTimeTable } from './redux/actions';
 import reducers from './redux/reducers';
-import TimeTable from './timetable';
 
 interface IMainProps {
     fetchTimeTable(v: any[]): void;

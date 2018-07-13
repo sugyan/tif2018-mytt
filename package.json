@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "install": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --mode development"
   },
   "dependencies": {
     "@types/react": "^16.4.6",

@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
 import {
-    UPDATE_TIMETABLE,
-    FILTER_TOGGLE_CHECKBOX, FILTER_CHANGE_KEYWORD,
+    FILTER_CHANGE_KEYWORD, FILTER_TOGGLE_CHECKBOX,
+    GENERATE_RESULT,
     SELECT_ITEM, SELECT_ITEMS,
-    GENERATE_RESULT
+    UPDATE_TIMETABLE,
 } from './actions';
 
 const timetable = combineReducers({
@@ -12,6 +12,14 @@ const timetable = combineReducers({
         switch (action.type) {
         case UPDATE_TIMETABLE:
             return action.data;
+        default:
+            return state;
+        }
+    },
+    result: (state = null, action: any) => {
+        switch (action.type) {
+        case GENERATE_RESULT:
+            return action.src;
         default:
             return state;
         }
@@ -35,63 +43,61 @@ const timetable = combineReducers({
             return state;
         }
     },
-    result: (state = null, action: any) => {
-        switch (action.type) {
-        case GENERATE_RESULT:
-            return action.src;
-        default:
-            return state;
-        }
-    }
 });
 
 const filter = combineReducers({
-    day: (state: any = {
-        '08-26': true,
-        '08-27': true,
-    }, action: any) => {
-        switch(action.type) {
+    day: (
+        state: any = {
+            '08-03': true,
+            '08-04': true,
+            '08-05': true,
+        },
+        action: any,
+    ) => {
+        switch (action.type) {
         case FILTER_TOGGLE_CHECKBOX:
             return {
                 ...state,
-                [action.name]: !state[action.name]
-            }
-        default:
-            return state;
-        }
-    },
-    stage: (state: any = {
-        'strawberry': true,
-        'blueberry':  true,
-        'orange':     true,
-        'grape':      true,
-        'kiwi':       true,
-        'peach':      true,
-        'pinapple':   true,
-        'talk':       false,
-        'greeting':   false,
-    }, action: any) => {
-        switch(action.type) {
-        case FILTER_TOGGLE_CHECKBOX:
-            return {
-                ...state,
-                [action.name]: !state[action.name]
-            }
+                [action.name]: !state[action.name],
+            };
         default:
             return state;
         }
     },
     keyword: (state = '', action: any) => {
-        switch(action.type) {
+        switch (action.type) {
         case FILTER_CHANGE_KEYWORD:
             return action.word;
         default:
             return state;
         }
-    }
+    },
+    stage: (
+        state: any = {
+            DOLLFACTORY:   true,
+            DREAMSTAGE:    true,
+            FESTIVALSTAGE: true,
+            FUJIYOKOSTAGE: true,
+            HOTSTAGE:      true,
+            INFOCENTRE:    true,
+            SKYSTAGE:      true,
+            SMILEGARDEN:   true,
+        },
+        action: any,
+    ) => {
+        switch (action.type) {
+        case FILTER_TOGGLE_CHECKBOX:
+            return {
+                ...state,
+                [action.name]: !state[action.name],
+            };
+        default:
+            return state;
+        }
+    },
 });
 
 export default combineReducers({
-    timetable,
     filter,
+    timetable,
 });
