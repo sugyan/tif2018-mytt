@@ -43,7 +43,7 @@ class Main extends React.Component<IMainProps, {}> {
                             </div>
                         </div>
                     </nav>
-                    <div className="container-fluid">
+                    <div className="container">
                         <Switch>
                             <Route exact path="/" component={TimeTable} />
                             {/* <Route path="/result" component={Result} />

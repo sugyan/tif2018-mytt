@@ -18,14 +18,15 @@ class Row extends React.Component<IRowProps> {
         return (
             <tr>
                 <td style={{ whiteSpace: 'nowrap' }}>
-                    <div className="checkbox" style={{ marginTop: 0, marginBottom: 0 }}>
-                        <label>
-                            {/* <input
-                                id={this.props.item.id}
-                                type="checkbox"
-                                checked={this.props.timetable.selected[this.props.item.id] ? true : false}
-                                onChange={(e) => this.props.dispatch(selectItem(this.props.item.id, e.target.checked))}
-                            /> */}
+                    <div className="form-check">
+                        <input
+                            id={item.id}
+                            type="checkbox"
+                            className="form-check-input"
+                            // checked={this.props.timetable.selected[this.props.item.id] ? true : false}
+                            // onChange={(e) => this.props.dispatch(selectItem(this.props.item.id, e.target.checked))}
+                        />
+                        <label htmlFor={item.id} className="form-check-label">
                             {item.start.format('M/D(ddd) HH:mm')} - {item.end.format('HH:mm')}
                         </label>
                     </div>
@@ -52,6 +53,4 @@ class Row extends React.Component<IRowProps> {
     }
 }
 
-export const SelectedRow = connect(
-    (state) => state,
-)(Row);
+export const SelectedRow = connect()(Row);

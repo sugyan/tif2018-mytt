@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+
+
+@media (max-width: 768px) {
+    html {
+        font-size: 95%;
+    }
+    .container {
+        padding: 0 10px;
+    }
+    .timetable td {
+        padding: 5px;
+    }
+    .timetable .form-check label {
+        font-size: 90%;
+    }
+}

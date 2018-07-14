@@ -39,10 +39,12 @@ class TimeTable extends React.Component<ITimeTableProps> {
             <div>
                 <FilterForm />
                 <hr />
-                <p>全{items.length}件</p>
-                <table className="table">
-                    <tbody>{rows}</tbody>
-                </table>
+                <div className="timetable">
+                    <p>全{items.length}件</p>
+                    <table className="table">
+                        <tbody>{rows}</tbody>
+                    </table>
+                </div>
                 {footer}
             </div>
         );

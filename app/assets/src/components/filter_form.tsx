@@ -1,7 +1,7 @@
 import React from 'react';
-import { connect, DispatchProp } from 'react-redux';
+import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { FilterAction, filterToggleCheckbox } from '../redux/actions';
+import { FilterAction, filterChangeKeyword, filterToggleCheckbox } from '../redux/actions';
 
 interface IFormProps {
     day?: any;
@@ -38,7 +38,7 @@ class Form extends React.Component<IFormProps & IDispatchProps> {
         ];
     }
     public render() {
-        const { day, stage, keyword, onChangeCheckbox } = this.props;
+        const { day, stage, keyword, onChangeKeyword, onToggleCheckbox  } = this.props;
         const days = this.days.map((e, i) => {
             const id = `day-${i}`;
             return (
@@ -48,7 +48,7 @@ class Form extends React.Component<IFormProps & IDispatchProps> {
                         type="checkbox"
                         checked={day[e.key]}
                         className="form-check-input"
-                        onChange={() => onChangeCheckbox(e.key)}
+                        onChange={() => onToggleCheckbox(e.key)}
                     />
                     <label className="form-check-label" htmlFor={id}>
                         {e.label}
@@ -65,7 +65,7 @@ class Form extends React.Component<IFormProps & IDispatchProps> {
                         type="checkbox"
                         checked={stage[e.key]}
                         className="form-check-input"
-                        onChange={() => onChangeCheckbox(e.key)}
+                        onChange={() => onToggleCheckbox(e.key)}
                     />
                     <label className="form-check-label" htmlFor={id}>
                         {e.label}
@@ -90,7 +90,7 @@ class Form extends React.Component<IFormProps & IDispatchProps> {
                             className="form-control"
                             type="text"
                             value={keyword}
-                            // onChange={(e) => this.props.dispatch(filterChangeKeyword(e.target.value))}
+                            onChange={(e) => onChangeKeyword(e.target.value)}
                         />
                     </div>
                 </div>
@@ -100,16 +100,16 @@ class Form extends React.Component<IFormProps & IDispatchProps> {
 }
 
 interface IDispatchProps {
-    onChangeCheckbox: (name: string) => void;
+    onChangeKeyword: (word: string) => void;
+    onToggleCheckbox: (name: string) => void;
 }
 
 export const FilterForm = connect<{}, IDispatchProps>(
     (state: any) => state.filter,
     (dispatch: Dispatch<FilterAction>): IDispatchProps => {
         return {
-            onChangeCheckbox: (name: string) => {
-                dispatch(filterToggleCheckbox(name));
-            },
+            onChangeKeyword: (word: string) => dispatch(filterChangeKeyword(word)),
+            onToggleCheckbox: (name: string) => dispatch(filterToggleCheckbox(name)),
         };
     },
 )(Form);
