@@ -1,7 +1,6 @@
 const path = require('path');
-// const webpack = require('webpack');
 
-const config = module.exports = {
+module.exports = {
     entry: './app/assets/src/main.tsx',
     output: {
         path: path.resolve(__dirname + '/app/assets/javascripts'),
@@ -19,15 +18,4 @@ const config = module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js']
     },
-    // devServer: {
-    //     inline: true
-    // }
 };
-
-// if (process.env.NODE_ENV === 'production') {
-//     config.plugins = [
-//         new webpack.DefinePlugin({
-//             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-//         })
-//     ];
-// }

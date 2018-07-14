@@ -2,7 +2,7 @@
   "name": "tif2018-mytt",
   "private": true,
   "scripts": {
-    "install": "webpack",
+    "install": "webpack --mode=production",
     "start": "webpack-dev-server --mode development"
   },
   "dependencies": {
