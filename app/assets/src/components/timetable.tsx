@@ -12,13 +12,13 @@ interface ITimeTableProps {
 
 class TimeTable extends React.Component<ITimeTableProps> {
     public render() {
-        const { timetable } = this.props;
-        const regexp = this.props.filter.keyword ? new RegExp(this.props.filter.keyword, 'i') : null;
+        const { filter, timetable } = this.props;
+        const regexp = filter.keyword ? new RegExp(filter.keyword, 'i') : null;
         const items = timetable.items.filter((item: any) => {
-            if (! this.props.filter.day[item.day]) {
+            if (! filter.day[item.day]) {
                 return false;
             }
-            if (! this.props.filter.stage[item.stage]) {
+            if (! filter.stage[item.stage]) {
                 return false;
             }
             let artist = item.artist || item.detail;
@@ -30,7 +30,7 @@ class TimeTable extends React.Component<ITimeTableProps> {
             }
             return true;
         });
-        const selectedCount = Object.keys(this.props.timetable.selected).length;
+        const selectedCount = Object.keys(timetable.selected).length;
         const rows = items.map((item: any, i: number) => {
             return <SelectedRow key={i} item={item} />;
         });
@@ -38,7 +38,6 @@ class TimeTable extends React.Component<ITimeTableProps> {
         return (
             <div>
                 <FilterForm />
-                <hr />
                 <div className="timetable">
                     <p>全{items.length}件</p>
                     <table className="table">

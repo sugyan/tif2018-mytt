@@ -74,27 +74,31 @@ class Form extends React.Component<IFormProps & IDispatchProps> {
             );
         });
         return (
-            <form className="form-horizontal" onSubmit={(e) => e.preventDefault()}>
-                <div className="form-group row">
-                    <label className="col-sm-2 control-label">日付</label>
-                    <div className="col-sm-10">{days}</div>
+            <div className="card my-2">
+                <div className="card-body pt-2 pb-0">
+                    <form className="form-horizontal" onSubmit={(e) => e.preventDefault()}>
+                        <div className="form-group row">
+                            <label className="col-sm-2 control-label">日付</label>
+                            <div className="col-sm-10">{days}</div>
+                        </div>
+                        <div className="form-group row">
+                            <label className="col-sm-2 control-label">ステージ</label>
+                            <div className="col-sm-10">{stages}</div>
+                        </div>
+                        <div className="form-group row">
+                            <label className="col-sm-2 control-label">出演者名</label>
+                            <div className="col-sm-10">
+                                <input
+                                    className="form-control"
+                                    type="text"
+                                    value={keyword}
+                                    onChange={(e) => onChangeKeyword(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div className="form-group row">
-                    <label className="col-sm-2 control-label">ステージ</label>
-                    <div className="col-sm-10">{stages}</div>
-                </div>
-                <div className="form-group row">
-                    <label className="col-sm-2 control-label">出演者名</label>
-                    <div className="col-sm-10">
-                        <input
-                            className="form-control"
-                            type="text"
-                            value={keyword}
-                            onChange={(e) => onChangeKeyword(e.target.value)}
-                        />
-                    </div>
-                </div>
-            </form>
+            </div>
         );
     }
 }

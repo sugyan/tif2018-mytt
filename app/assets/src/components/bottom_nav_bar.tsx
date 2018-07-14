@@ -1,24 +1,23 @@
 import React from 'react';
-import { withRouter } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 
-interface IBottomBavbarProps {
-    history: any;
-    count: any;
+interface IBottomNavbarProps extends RouteComponentProps<any> {
+    count: number;
 }
 
-class BottomNavbar extends React.Component<IBottomBavbarProps> {
+class BottomNavbar extends React.Component<IBottomNavbarProps> {
     public handleClick() {
-        this.props.history.push('/result');
+        const { history } = this.props;
+        history.push('/result');
     }
     public render() {
+        const { count } = this.props;
         return (
-            <nav className="navbar navbar-default navbar-fixed-bottom">
-                <div className="container-fluid">
-                    <div className="navbar-collapse navbar-right">
-                        <button className="btn btn-primary navbar-btn" onClick={this.handleClick.bind(this)}>
-                            選択中の
-                            <strong>{this.props.count}</strong>
-                            件でタイムテーブルを生成
+            <nav className="navbar navbar-light bg-light fixed-bottom">
+                <div className="container-fluid text-center">
+                    <div className="navbar-collapse">
+                        <button className="btn btn-primary" onClick={this.handleClick.bind(this)}>
+                            選択中の<strong>{count}</strong>件でタイムテーブルを生成
                         </button>
                     </div>
                 </div>
@@ -26,4 +25,5 @@ class BottomNavbar extends React.Component<IBottomBavbarProps> {
         );
     }
 }
-export const RoutingBottomNavbar = withRouter<any>(BottomNavbar);
+
+export const RoutingBottomNavbar = withRouter(BottomNavbar);

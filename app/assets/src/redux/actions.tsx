@@ -1,3 +1,5 @@
+import { Action } from 'redux';
+
 export const UPDATE_TIMETABLE       = 'UPDATE_TIMETABLE';
 export const FILTER_TOGGLE_CHECKBOX = 'FILTER_TOGGLE_CHECKBOX';
 export const FILTER_CHANGE_KEYWORD  = 'FILTER_CHANGE_KEYWORD';
@@ -9,14 +11,18 @@ export const updateTimeTable = (data: any) => {
     return { type: UPDATE_TIMETABLE, data };
 };
 
-interface IFilterCheckboxAction {
-    type: string;
+interface IFilterCheckboxAction extends Action {
     name: string;
 }
 
-interface IFilterKeywordAction {
-    type: string;
+interface IFilterKeywordAction extends Action {
     word: string;
+}
+
+export interface ISelectItemAction {
+    type: string;
+    id: string;
+    checked: boolean;
 }
 
 export const filterToggleCheckbox = (name: string): IFilterCheckboxAction => {
@@ -29,7 +35,7 @@ export const filterChangeKeyword = (word: any): IFilterKeywordAction => {
 
 export type FilterAction = IFilterCheckboxAction | IFilterKeywordAction;
 
-export const selectItem = (id: any, checked: any) => {
+export const selectItem = (id: string, checked: boolean): ISelectItemAction => {
     return { type: SELECT_ITEM, id, checked };
 };
 
@@ -37,6 +43,10 @@ export const selectItems = (ids: any) => {
     return { type: SELECT_ITEMS, ids };
 };
 
-export const generateResult = (src: any) => {
-    return { type: GENERATE_RESULT, src };
+export interface IGenerateResultAction extends Action {
+    data?: string;
+}
+
+export const generateResult = (data?: string): IGenerateResultAction => {
+    return { type: GENERATE_RESULT, data };
 };

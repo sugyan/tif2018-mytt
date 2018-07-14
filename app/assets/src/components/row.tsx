@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { ISelectItemAction, selectItem } from '../redux/actions';
 
 // import { selectItem } from '../redux/actions';
 
@@ -8,9 +9,19 @@ interface IRowProps {
     item: any;
 }
 
-class Row extends React.Component<IRowProps> {
+interface IStateProps {
+    timetable: any;
+}
+
+interface IDispatchProps {
+    onSelectItem: (id: string, checked: boolean) => void;
+}
+
+type IProps = IRowProps & IStateProps & IDispatchProps;
+
+class Row extends React.Component<IProps> {
     public render() {
-        const { item } = this.props;
+        const { item, timetable, onSelectItem } = this.props;
         let content = item.artist;
         if (item.detail) {
             content += ` [${item.detail.replace(/<br>/g, ', ')}]`;
@@ -23,8 +34,8 @@ class Row extends React.Component<IRowProps> {
                             id={item.id}
                             type="checkbox"
                             className="form-check-input"
-                            // checked={this.props.timetable.selected[this.props.item.id] ? true : false}
-                            // onChange={(e) => this.props.dispatch(selectItem(this.props.item.id, e.target.checked))}
+                            checked={timetable.selected[item.id] ? true : false}
+                            onChange={(e) => onSelectItem(item.id, e.target.checked)}
                         />
                         <label htmlFor={item.id} className="form-check-label">
                             {item.start.format('M/D(ddd) HH:mm')} - {item.end.format('HH:mm')}
@@ -53,4 +64,15 @@ class Row extends React.Component<IRowProps> {
     }
 }
 
-export const SelectedRow = connect()(Row);
+export const SelectedRow = connect<IStateProps, IDispatchProps>(
+    (state: any): IStateProps => {
+        return {
+            timetable: state.timetable,
+        };
+    },
+    (dispatch: Dispatch<ISelectItemAction>): IDispatchProps => {
+        return {
+            onSelectItem: (id: string, checked: boolean) => dispatch(selectItem(id, checked)),
+        };
+    },
+)(Row);

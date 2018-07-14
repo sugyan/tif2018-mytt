@@ -19,7 +19,7 @@ const timetable = combineReducers({
     result: (state = null, action: any) => {
         switch (action.type) {
         case GENERATE_RESULT:
-            return action.src;
+            return action.data || null;
         default:
             return state;
         }

@@ -7,7 +7,7 @@ import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { createStore } from 'redux';
 import 'whatwg-fetch';
 
-// import Result from './result';
+import Result from './components/result';
 import TimeTable from './components/timetable';
 import { generateResult, selectItems, updateTimeTable } from './redux/actions';
 import reducers from './redux/reducers';
@@ -34,7 +34,7 @@ class Main extends React.Component<IMainProps, {}> {
         return (
             <BrowserRouter>
                 <div>
-                    <nav className="navbar navbar-expand-lg navbar-light bg-dark">
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                         <div className="container-fluid">
                             <div className="navbar-header">
                                 <Link to="/">
@@ -46,8 +46,8 @@ class Main extends React.Component<IMainProps, {}> {
                     <div className="container">
                         <Switch>
                             <Route exact path="/" component={TimeTable} />
-                            {/* <Route path="/result" component={Result} />
-                            <Route path="/tt/:key" component={Result} /> */}
+                            <Route path="/result" component={Result} />
+                            {/* <Route path="/tt/:key" component={Result} /> */}
                         </Switch>
                     </div>
                 </div>
