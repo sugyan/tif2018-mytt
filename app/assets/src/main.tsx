@@ -47,7 +47,7 @@ class Main extends React.Component<IMainProps, {}> {
                         <Switch>
                             <Route exact path="/" component={TimeTable} />
                             <Route path="/result" component={Result} />
-                            {/* <Route path="/tt/:key" component={Result} /> */}
+                            <Route path="/tt/:key" component={Result} />
                         </Switch>
                     </div>
                 </div>
@@ -71,9 +71,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
                         fetch('/api/generate', {
                             body: JSON.stringify({ ids }),
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
+                            headers: { 'Content-Type': 'application/json' },
                             method: 'POST',
                         }).then((response) => {
                             return response.json();

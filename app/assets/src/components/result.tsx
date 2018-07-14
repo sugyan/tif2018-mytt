@@ -4,11 +4,6 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { Dispatch } from 'redux';
 import { generateResult } from '../redux/actions';
 
-// import { generateResult } from './redux/actions';
-
-// interface IProps extends RouteComponentProps<any> {
-// }
-
 interface IStateProps {
     timetable: any;
 }
@@ -19,13 +14,19 @@ interface IDispatchProps {
 
 type IProps = IStateProps & IDispatchProps & RouteComponentProps<any>;
 
-class Result extends React.Component<IProps, {}> {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             url: undefined
-//         };
-//     }
+interface IState {
+    url?: string;
+    urlFetching: boolean;
+}
+
+class Result extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
+        super(props);
+        this.state = {
+            url: undefined,
+            urlFetching: false,
+        };
+    }
     public componentDidMount() {
         const { timetable, onGenerateResult } = this.props;
         onGenerateResult();
@@ -44,47 +45,58 @@ class Result extends React.Component<IProps, {}> {
             onGenerateResult(json.result);
         });
     }
-//     handleClickTweetButton() {
-//         fetch('/api/tweet', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify({
-//                 ids: Object.keys(this.props.timetable.selected)
-//             })
-//         }).then((response) => {
-//             return response.json();
-//         }).then((json) => {
-//             this.props.history.push('/tt/' + json.key);
-//             const url = 'https://twitter.com/intent/tweet?hashtags=アットジャム_MyTT'
-//               + '&text=' + encodeURIComponent(`俺のタイテ ${json.url}`)
-//               + '&url=' + encodeURIComponent(window.location.href);
-//             this.setState({ url: url });
-//         });
-//     }
+    public handleClickTweetButton() {
+        const { timetable, history } = this.props;
+        this.setState({ urlFetching: true });
+        fetch('/api/tweet', {
+            body: JSON.stringify({
+                ids: Object.keys(timetable.selected),
+            }),
+            headers: { 'Content-Type': 'application/json' },
+            method: 'POST',
+        }).then((response) => {
+            return response.json();
+        }).then((json) => {
+            history.push('/tt/' + json.key);
+            const url = 'https://twitter.com/intent/tweet?hashtags=TIF2018_MyTT'
+                + '&text=' + encodeURIComponent(`俺のタイテ ${json.url}`)
+                + '&url=' + encodeURIComponent(window.location.href);
+            this.setState({ url });
+        });
+    }
     public render() {
-        const { timetable } = this.props;
+        const { timetable, history } = this.props;
         const result = timetable.result
             ? <img src={timetable.result} style={{ maxWidth: '100%' }} />
             : <div>画像を生成しています...</div>;
-//         let button = this.state.url
-//             ? <a className="btn btn-primary" href={this.state.url} target="_blank">
-//                 Tweetする
-//             </a>
-//             : <button className="btn btn-info" onClick={this.handleClickTweetButton.bind(this)}>
-//                 URLを取得
-//             </button>;
+        let button;
+        if (this.state.url) {
+            button = (
+                <a className="btn btn-primary" href={this.state.url} target="_blank">
+                    Tweetする
+                </a>
+            );
+        } else {
+            button = (
+                <button
+                    className="btn btn-info"
+                    disabled={this.state.urlFetching}
+                    onClick={this.handleClickTweetButton.bind(this)}
+                >
+                    URLを取得
+                </button>
+            );
+        }
         return (
             <div>
                 <div>{result}</div>
-                {/* <hr />
-                <div className="pull-left">
-                    <button className="btn btn-default" onClick={() => this.props.history.push('/')}>
+                <hr />
+                <div className="float-left">
+                    <button className="btn btn-light" onClick={() => history.push('/')}>
                         選び直す
                     </button>
                 </div>
-                <div className="pull-right">{button}</div> */}
+                <div className="float-right">{button}</div>
             </div>
         );
     }
