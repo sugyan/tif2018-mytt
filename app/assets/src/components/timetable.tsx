@@ -23,7 +23,7 @@ class TimeTable extends React.Component<ITimeTableProps> {
             }
             let artist = item.artist || item.detail;
             if (item.detail !== null) {
-                artist += ` (${item.detail})`;
+                artist += ` (${item.detail.join(' ')})`;
             }
             if (regexp && ! artist.match(regexp)) {
                 return false;

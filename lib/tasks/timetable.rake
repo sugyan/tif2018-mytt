@@ -30,10 +30,11 @@ namespace :timetable do
             id = [day, stage_code, item['start']].join('-')
             start_time = Time.zone.strptime("#{date} #{item['start']}", '%Y-%m-%d %H%M')
             end_time =   Time.zone.strptime("#{date} #{item['end']}",   '%Y-%m-%d %H%M')
+            detail = item['detail'].split(/<br>/).delete_if(&:empty?) if item['detail'] != 'null'
             results << {
               id: id,
               artist: item['artist'],
-              detail: item['detail'] != 'null' ? item['detail'] : nil,
+              detail: detail,
               start: start_time,
               end: end_time,
               stage: stage_code,

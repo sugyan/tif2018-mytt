@@ -24,7 +24,7 @@ class Row extends React.Component<IProps> {
         const { item, timetable, onSelectItem } = this.props;
         let content = item.artist;
         if (item.detail) {
-            content += ` [${item.detail.replace(/<br>/g, ', ')}]`;
+            content += ` [${item.detail.join(', ')}]`;
         }
         return (
             <tr>
