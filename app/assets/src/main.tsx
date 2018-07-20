@@ -23,8 +23,8 @@ class Main extends React.Component<IMainProps, {}> {
         }).then((json) => {
             const { fetchTimeTable } = this.props;
             fetchTimeTable(json.map((e: any) => {
-                e.start = moment(e.start * 1000);
-                e.end   = moment(e.end   * 1000);
+                e.start = moment(e.start * 1000).utcOffset('+09:00');
+                e.end   = moment(e.end   * 1000).utcOffset('+09:00');
                 e.day   = e.start.format('MM-DD');
                 return e;
             }));
