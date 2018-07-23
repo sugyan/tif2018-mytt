@@ -27,6 +27,7 @@ namespace :timetable do
           stage_code = stage.delete(' ')
           color = colors[stage_code]
           items.each do |item|
+            next if item['artist'].include?('未使用') # FUCK
             id = [day, stage_code, item['start']].join('-')
             start_time = Time.zone.strptime("#{date} #{item['start']}", '%Y-%m-%d %H%M')
             end_time =   Time.zone.strptime("#{date} #{item['end']}",   '%Y-%m-%d %H%M')
