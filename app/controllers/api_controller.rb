@@ -64,7 +64,8 @@ class ApiController < ApplicationController
           self.font = Rails.root.join('.fonts', 'ipagp.ttf').to_path
           self.pointsize = 15
         end
-        artist = item[:artist].presence || item[:detail]
+        artist = item[:artist].presence
+        artist += " [#{item[:detail].join(', ')}]" if item[:detail]
         Magick::Draw.new.annotate(img, 0, 0, 260, 24, artist.tr("\n", ' ')) do
           self.font = Rails.root.join('.fonts', 'ipagp.ttf').to_path
           self.font_weight = Magick::BoldWeight
