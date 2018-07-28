@@ -41,7 +41,7 @@ class ApiController < ApplicationController
       item[:start].to_date
     end.uniq
     images = days.map do |day|
-      title = Magick::Image.new(540, 35)
+      title = Magick::Image.new(545, 35)
       Magick::Draw.new.annotate(title, 0, 0, 0, 0, I18n.l(day)) do
         self.font = Rails.root.join('.fonts', 'ipagp.ttf').to_path
         self.pointsize = 15
