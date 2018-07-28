@@ -35,6 +35,7 @@ class Form extends React.Component<IFormProps & IDispatchProps> {
             { key: 'FESTIVALSTAGE', label: 'FESTIVAL STAGE'  },
             { key: 'FUJIYOKOSTAGE', label: 'FUJI YOKO STAGE' },
             { key: 'INFOCENTRE',    label: 'INFO CENTRE'     },
+            { key: 'GREETINGAREA',  label: 'GREETING AREA'   },
         ];
     }
     public render() {

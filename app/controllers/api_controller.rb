@@ -53,20 +53,20 @@ class ApiController < ApplicationController
           start: item[:start].in_time_zone.strftime('%H:%M'),
           end: item[:end].in_time_zone.strftime('%H:%M')
         )
-        img = Magick::Image.new(540, 35) do
+        img = Magick::Image.new(545, 35) do
           self.background_color = item[:color]
         end
-        Magick::Draw.new.fill('white').roundrectangle(5, 5, 535, 30, 5, 5).draw(img)
+        Magick::Draw.new.fill('white').roundrectangle(5, 5, 540, 30, 5, 5).draw(img)
         Magick::Draw.new.annotate(img, 0, 0, 10, 24, time) do
           self.pointsize = 15
         end
-        Magick::Draw.new.annotate(img, 0, 0, 100, 24, format('[%<stage>s]', stage: stage_name(item[:stage]))) do
+        Magick::Draw.new.annotate(img, 0, 0, 100, 24, format('[%<stage>s]', stage: item[:stage])) do
           self.font = Rails.root.join('.fonts', 'ipagp.ttf').to_path
           self.pointsize = 15
         end
         artist = item[:artist].presence
         artist += " [#{item[:detail].join(', ')}]" if item[:detail]
-        Magick::Draw.new.annotate(img, 0, 0, 260, 24, artist.tr("\n", ' ')) do
+        Magick::Draw.new.annotate(img, 0, 0, 265, 24, artist.tr("\n", ' ')) do
           self.font = Rails.root.join('.fonts', 'ipagp.ttf').to_path
           self.font_weight = Magick::BoldWeight
           self.pointsize = 15

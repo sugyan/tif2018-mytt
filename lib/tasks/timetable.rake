@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 namespace :timetable do
   task main: :environment do
     abort if Time.zone.now >= Time.zone.local(2018, 8, 6)
@@ -17,7 +18,8 @@ namespace :timetable do
       'SKYSTAGE'      => '#39CDFE',
       'FESTIVALSTAGE' => '#FFDF33',
       'FUJIYOKOSTAGE' => '#06708F',
-      'INFOCENTRE'    => '#FB3CA6'
+      'INFOCENTRE'    => '#FB3CA6',
+      'GREETINGAREA'  => '#808080'
     }
     results = []
     open('http://www.idolfes.com/2018/json/timetable/time.json') do |f|
@@ -38,10 +40,37 @@ namespace :timetable do
               detail: detail,
               start: start_time,
               end: end_time,
-              stage: stage_code,
+              stage: stage,
+              stage_code: stage_code,
               color: color
             }
           end
+        end
+      end
+    end
+    open('http://www.idolfes.com/2018/greeting/greeting.tsv', 'r:UTF-8') do |f|
+      color = colors['GREETINGAREA']
+      f.read.each_line do |line|
+        day, time, *items = line.chomp.split(/\t/)
+        times = time.split(/～/)
+        date = dates[day]
+        start_time = Time.zone.strptime("#{date} #{times[0]}", '%Y-%m-%d %H：%M')
+        end_time   = Time.zone.strptime("#{date} #{times[1]}", '%Y-%m-%d %H：%M')
+        items.each.with_index do |item, i|
+          next if item.blank?
+          stage_code = ('A'.ord + i).chr
+          stage = "GREETING AREA (#{stage_code})"
+          id = "#{day}-GREETINGAREA-#{start_time.strftime('%H%M')}-#{stage_code}"
+          results << {
+            id: id,
+            artist: item,
+            detail: nil,
+            start: start_time,
+            end: end_time,
+            stage: stage,
+            stage_code: 'GREETINGAREA',
+            color: color
+          }
         end
       end
     end
@@ -49,3 +78,4 @@ namespace :timetable do
     Rails.cache.write('main', results)
   end
 end
+# rubocop:enable Metrics/BlockLength

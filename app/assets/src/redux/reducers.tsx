@@ -78,6 +78,7 @@ const filter = combineReducers({
             DREAMSTAGE:    true,
             FESTIVALSTAGE: true,
             FUJIYOKOSTAGE: true,
+            GREETINGAREA:  false,
             HOTSTAGE:      true,
             INFOCENTRE:    true,
             SKYSTAGE:      true,

@@ -18,7 +18,7 @@ class TimeTable extends React.Component<ITimeTableProps> {
             if (! filter.day[item.day]) {
                 return false;
             }
-            if (! filter.stage[item.stage]) {
+            if (! filter.stage[item.stage_code]) {
                 return false;
             }
             let artist = item.artist || item.detail;
