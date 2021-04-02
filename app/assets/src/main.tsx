@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import { connect, Provider } from 'react-redux';
 import { BrowserRouter, Link, Route, Switch } from 'react-router-dom';
 import { createStore } from 'redux';
-import 'whatwg-fetch';
 
 import Result from './components/result';
 import TimeTable from './components/timetable';
